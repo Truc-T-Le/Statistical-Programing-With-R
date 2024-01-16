@@ -1,0 +1,62 @@
+---
+title: "Check-in 2"
+author: "Amelia Le"
+date: "2023-08-28"
+output: html_document
+---
+
+You should edit this .Rmd using RStudio, then click *Render* in the menu bar of the Source window (above the text of this .Rmd). Remember, you must submit *both* your .Rmd and the compiled .html in order to receive full credit!
+
+### Collaborators
+
+INSERT NAMES OF ANY COLLABORATORS
+
+## A. Functions
+
+Work with one or two other students,
+
+**1.** In words, what does the following line of code do?
+
+```{r, eval = T}
+sample(1:6, 1)
+```
+
+The line of code is randomly generation a value from 1 to 6 and returning that value. 
+
+**2.** Run the line of code in RStudio. What do you get? What did your groupmates get? What happens to the result each time you knit the document?
+
+The code returns the value 3 when it first ran, and the result changes each time the document is knitted.
+
+**3.** Below, we introduce the `set.seed` function. What do the two lines of code below do? What does the `456` mean? What happens to the result each time you knit the document?
+
+```{r, eval = T}
+set.seed(456)
+sample(1:6, 1)
+```
+
+The set.seed() function allows for the random number generator code to return a reproducible result each time we run it. The `456` is use as a starting point for the set.seed() function. 
+
+
+## B. Vectors and Matrices
+
+**4.** Write a line of code to generate a vector of length 100 whose entries are 1, 2, ..., 100.
+
+```{r, eval = T}
+x <- c(1:100)
+x
+```
+
+**5.** Write a line of code to generate the following matrix:
+
+`1 2 3`
+
+`4 5 6`
+
+`7 8 9`
+
+
+```{r, eval = T}
+
+my_matrix <- matrix(c(1:9), nrow = 3, ncol = 3, byrow = T)
+my_matrix
+```

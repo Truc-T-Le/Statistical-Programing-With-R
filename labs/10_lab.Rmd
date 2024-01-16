@@ -1,0 +1,137 @@
+---
+title: "Lab 10"
+author: "YOUR NAME HERE"
+date: 2023-11-29
+date-format: "[Due] MMMM DD, YYYY"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    code-summary: "Code"
+---
+
+Remember, you must submit *both* your .Rmd and the compiled .html in order to receive full credit! In addition, to receive full credit, your code output and plots must be correctly formatted.
+
+### Collaborators
+
+## A. Hypothesis Testing
+
+1. Use the following code to obtain the Hawaiian Airlines and Alaska Airlines flights from the `nycflights13` package.
+
+```{r, warning = F, message = F}
+library(tidyverse)
+library(nycflights13)
+data("flights")
+flights_sample <- flights |> 
+  filter(carrier %in% c("HA", "AS"))
+```
+
+2. Compute a 95% confidence interval for the mean `arr_delay` for Alaska Airlines flights. Interpret your results.
+
+```{r}
+AS <- flights_sample |> filter(carrier == "AS") |> select(arr_delay) |> drop_na()
+
+upper_AS = mean(AS$arr_delay) - 1.96 * (sd(AS$arr_delay)/sqrt(length(AS$arr_delay)))
+
+lower_AS = mean(AS$arr_delay) + 1.96 * (sd(AS$arr_delay)/sqrt(length(AS$arr_delay)))
+```
+
+
+3. Compute a 95% confidence interval for the mean `arr_delay` for Hawaiian Airlines flights. Interpret your results.
+
+```{r}
+HA <- flights_sample |> filter(carrier == "HA") |> select(arr_delay) |> drop_na()
+
+upper_HA = mean(HA$arr_delay) - 1.96 * (sd(HA$arr_delay)/sqrt(length(HA$arr_delay)))
+
+lower_HA = mean(HA$arr_delay) + 1.96 * (sd(HA$arr_delay)/sqrt(length(HA$arr_delay)))
+```
+
+4. Compute a 95% confidence interval for the proportion of flights for which `arr_delay > 0` for Hawaiian Airlines flights. Interpret your results.
+
+```{r}
+HA_p <- flights_sample |> 
+  filter(carrier == "AS", arr_delay > 0) |>
+  select(arr_delay) |>
+  summarise(n = n())
+
+n <- flights_sample |> 
+  filter(carrier == "AS") |>
+  select(arr_delay) |>
+  drop_na() |> 
+  summarise(n = n())
+
+
+
+
+```
+
+5. Consider the null hypothesis that the mean `arr_delay` for Alaska is equal to the mean `arr_delay` for Hawaiian and the alternative hypothesis that the mean `arr_delay` values are different for the two airlines. Perform an appropriate hypothesis test and interpret your results.
+
+## B. Linear Regression
+
+6. Researchers at the University of Texas in Austin, Texas tried to figure out what causes differences in instructor teaching evaluation scores. Use the following code to load data on 463 courses. A full description of the data can be found [here](https://www.openintro.org/book/statdata/?data=evals).
+
+```{r, warning = F, message = F}
+evals <- readr::read_csv("https://www.openintro.org/book/statdata/evals.csv")
+```
+
+7. Carry out a linear regression with `score` as the response variable and `age` as the single explanatory variable. Interpret your results.
+
+```{r}
+fit <- lm(score ~ age, data = evals)
+summary(fit)
+```
+
+The Multiple R-squared and Adjusted R-squared for this model is incredibly low, at 0.01146 and 0.02125 respectively, showing us that this model's predicative ability is unreliable. However, since the p-value from the F-statistics is smaller than any reasonable alpha-level, it shows that the current model with the age variable is better at predicting an instructor's evaluation score than the model with only the intercept. 
+
+The p-values for all the estimators show that they are significant at all reasonable alpha level, therefore, we should keep all estimators within out fitted model when calculating predicted values.
+
+8. Extend your regression model by adding an additional explanatory variable. What happens to your results? Are the new $p$-values appropriate to use?
+
+```{r}
+fit.2 <- lm(score ~ age + rank, data = evals)
+summary(fit.2)
+```
+
+By adding an additional explanatory variable, the R-squared and Adjusted R-squared values increases with the values being 0.02983 and 0.02349. The improvement in the  R-squared and Adjusted R-squared values shows that adding an additional explanatory variable to the fitted model does improve the performance of the model, however, since the values are still significantly small the model predicative ability is still highly unreliable. The new p-values are appropriate to use in this case. 
+
+## C. Power simulation
+
+9. For this question, you will write a simulation to estimate the power of a one-sample $t$-test for a population mean for varying effect sizes, $\alpha$, and sample sizes. In particular, assume that we are testing the hypotheses $H_0: \mu = 0$ and $H_a: \mu \not=0$.
+
+    a. Write a function that takes four inputs: `mu`, `sigma`, `alpha`, and `n`. Your function should randomly simulate a sample of `n` normal random variables with mean `mu` and standard deviation `sigma` and then compute the appropriate test $t$-statistic, treating the mean and standard deviation as unknown. You should then compare your test statistic with a $t$ distribution and obtain the $P$-value of your hypothesis test. Based on `alpha`, return `TRUE` if the null hypothesis is rejected and `FALSE` if the null hypothesis is not rejected.
+    
+```{r}
+set.seed(302)
+
+sample_norm <- function(mu, sigma, alpha, n) {
+  x <- rnorm(n, mu, sigma)
+  t.stat = ( mean(x) - mu )/( sd(x)/sqrt(n) )
+  crit = qt(.975, n-1)
+  pval <- mean(abs(t.stat) > crit)
+  if (pval < alpha) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+```
+    
+    b. Run your function 1000 times to estimate the power when `mu = 1`, `sigma = 1`, `alpha = .05` and `n = 10`.
+  
+```{r}  
+power_1 <- mean(as.integer(as.logical(replicate(1000, sample_norm(1, 1, 0.5, 10)))))
+power_1
+```
+
+    c. Run your function 1000 times to estimate the power when `mu = 0.5`, `sigma = 1`, `alpha = .05` and `n = 10`. Compare with your results from (b).
+    
+```{r}
+power_05 <- mean(as.integer(as.logical(replicate(1000, sample_norm(0.5, 1, 0.5, 10)))))
+power_05
+```
+
+
+The t-statistics of the normal random variables using $\mu$ = 0.5 has a slightly higher power than the t-statistics the normal random variables using $\mu$ = 1.

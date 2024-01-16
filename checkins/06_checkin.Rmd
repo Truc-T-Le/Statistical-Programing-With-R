@@ -1,0 +1,76 @@
+---
+title: "Check-in 6"
+author: "Amelia Le"
+date: "2023-10-16"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    code-summary: "Code"
+---
+
+Remember, you must submit *both* your .Rmd and the compiled .html in order to receive full credit! In addition, to receive full credit, your code output and plots must be correctly formatted.
+
+### Collaborators
+
+INSERT NAMES OF ANY COLLABORATORS
+
+Given a vector $\mathbf{x}=(x_1,\ldots, x_n)$ and a number $p\geq 1$, the vector p-norm is defined as
+
+$$||\mathbf{x}||_p=(|x_1|^p+\cdots+|x_n|^p)^{1/p}$$
+
+For example, the vector 2-norm is given by
+
+$$||\mathbf{x}||_2=(|x_1|^2+\cdots+|x_n|^2)^{1/2}$$
+
+Consider the following code.
+
+```{r, eval = T, echo = T}
+create_p_norm <- function(p = 2) {
+  return(
+    function(x) return(sum(abs(x) ^ p) ^ (1 / p))
+  )
+}
+```
+
+1. Explain in your own words what the following code does:
+
+```{r, eval = T, echo = T}
+norm_1 <- create_p_norm(1)
+x <- c(-1, 1, 2)
+norm_1(x)
+```
+The following is a step-by-step explanation of what the code above is doing:
+
+1. The function is looking to see if a value is passed to the function or if it will use the default value of 2 for p as stated in the formals of the function. In this case, we have specifically pass through "1" when executing the function, therefore, the create_p_norm function will now use p=1 rather than p=2.
+
+2. The function is taking the absolute value of each value in the vector: $<|-1|, |1|, |2|> \rightarrow <1, 1, 2>$
+
+3. Raise each absolute value to the power of 1 and sum them together: $1^1 + 1^1 + 2^1 = 4$
+
+4. Raise the summed value to the power of 1/1: $4^1 = 4$
+
+5. Return the final value which is 4.
+
+
+2. Explain in your own words what the following code does:
+
+```{r, eval = T, echo = T}
+p <- 3
+norm_mystery <- create_p_norm()
+x <- c(-1, 1, 2)
+norm_mystery(x)
+```
+The following is a step-by-step explanation of what the code above is doing:
+
+1. the value p is defined to be three outside of the create_p_norm function.
+
+2. The function will execute using p=2 rather than p=3, since the p variable that is defined within the function will mask the p variable that is define outside of the variable. 
+
+3. The function is taking the absolute value of each value in the vector: $<|-1|, |1|, |2|> \rightarrow <1, 1, 2>$
+
+4. Square each of the absolute value and sum them together: $1^2 + 1^2 + 2^2 = 6$
+
+5. Raise the summed value to the power of 1/2: $6^{1/2} = 2.44949$
+
+6. Return the final value which is 2.44949.

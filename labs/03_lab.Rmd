@@ -1,0 +1,123 @@
+---
+title: "Lab 3"
+author: "Amelia Le"
+date: "2023-08-30"
+output: html_document
+---
+
+You should edit this .Rmd using RStudio, then click *Render* in the menu bar of the Source window (above the text of this .Rmd). Remember, you must submit *both* your .Rmd and the compiled .html in order to receive full credit!
+
+### Collaborators
+
+INSERT NAMES OF ANY COLLABORATORS
+
+```{r}
+library(tidyverse)
+library(dplyr)
+```
+
+## A. Weather Forecast Data
+
+1.For this lab, we'll be using data on weather forecasts gathered by student at Saint Louis University. You can read about the dataset [here](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-12-20). Download the weather forecasts data using the following code:
+
+```{r}
+    weather_forecasts <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-12-20/weather_forecasts.csv')
+```
+<br>
+
+2.How many rows are in this dataset? How many columns?
+
+```{r}
+# Finding the numbers of rows and columns in the dataset. 
+
+rows <- nrow(weather_forecasts)
+cols <- ncol(weather_forecasts)
+```
+
+There are `r rows` rows and `r cols` in the Weather Forecast dataset.
+
+<br>
+
+3.How many cities are represented in this dataset?
+
+```{r}
+# Create a vector of all unique city names within the city then return the length of the vector 
+    
+city_names <- length(unique(weather_forecasts$city))
+```
+
+There are `r city_names` cities represented in the dataset. 
+    
+<br>    
+    
+4.Create a new data frame containing only the forecasts for San Jose. You may have to explore the values for the `city` variable.
+
+```{r}
+#Create a dataframe that only contain the data for the city of San Jose.  
+
+df_sj<- weather_forecasts |> filter(city == "SAN_JOSE")    
+
+head(df_sj)
+```
+
+<br>
+
+5.Compute the mean absolute error between `observed_temp` and `forecast_temp` for San Jose.
+
+```{r}
+# MAE = Sum(obs - forecast)/n
+# Create a subset dataset with just the observed_temp and forecast_temp columns
+# Drop all the NA variables within the subset dataset. 
+
+df_all_hours = drop_na(subset(df_sj, select = c('observed_temp', 'forecast_temp')))
+
+mae_all_hours <- sum(abs(df_all_hours$observed_temp - df_all_hours$forecast_temp))/length(df_all_hours$observed_temp)
+
+```
+The mean absolute error between observed temperatures and forecast temperatures for San Jose is `r mae_all_hours`.
+
+<br>
+    
+6.Compute the mean absolute error between `observed_temp` and `forecast_temp` for San Jose using only forecasts made 48 hours in advance.
+
+```{r}
+# Create a dataframe that only contain data points for weather forecasts made 48 hours in advance. 
+# Create a subset dataframe that only contain the `observed_temp` and `forecast_temp` columns and drop all the NA variables
+# Calculate the mean abbsolute error for the observed temepratues and forecasted temperatues
+
+
+df_48 <- df_sj[df_sj$forecast_hours_before == 48, ]
+
+df_48_hours <- drop_na(subset(df_48, select = c('observed_temp', 'forecast_temp')))
+
+mae_48_hours <- sum(abs(df_48_hours$observed_temp - df_48_hours$forecast_temp))/length(df_48_hours$observed_temp)    
+
+```
+
+The mean absolute error between the observed temperatures and the forecast temperatures made 48 hours in advance for San Jose is `r mae_48_hours`.
+
+<br>
+
+7.Compute the mean absolute error between `observed_temp` and `forecast_temp` for San Jose using only forecasts made 12 hours in advance.
+
+```{r}
+# Create a dataframe that only contain data points for weather forecasts made 12 hours in advance. 
+# Create a subset dataframe that only contain the `observed_temp` and `forecast_temp` columns and drop all the NA variables
+# Calculate the mean abbsolute error for the observed temepratues and forecasted temperatues
+
+df_12_hours <-  df_sj |> filter(forecast_hours_before == 12) |> subset( select = c('observed_temp', 'forecast_temp')) |> drop_na()
+
+mae_12_hours <- sum(abs(df_12_hours$observed_temp - df_12_hours$forecast_temp))/length(df_12_hours$observed_temp)    
+```
+
+The mean absolute error between the observed temperatures and the forecast temperatures made 12 hours in advance for San Jose is `r mae_12_hours`.
+
+<br>
+
+8.Compare your answers to 6 and 7. What do you notice? 
+
+The value of the mean absolute error between the observed temperatures anf the forecast temperatures made 12 hours in advance is smaller than the value of the mean absolute error made 48 hours in advance. The values make sense because the further out the forecast is made the less accurate the forecast temperature will be compared to the observed temperatures. 
+
+
+
+

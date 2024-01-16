@@ -1,0 +1,61 @@
+---
+title: "Checkin 4"
+author: "Amelia Le"
+output:
+  html_document:
+    df_print: paged
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r warning=FALSE}
+library(tidyr)
+library(tidyverse)
+library(kableExtra)
+library(tidyselect)
+housing_units <- readr::read_csv("https://www2.census.gov/programs-surveys/popest/datasets/2010-2020/housing/HU-EST2020_ALL.csv")
+```
+1. Generate a line plot of the number of housing units in the entire United States from 2010 to 2020.
+```{r}
+# delete the extra year columns we do not need
+# pivot the graph longer for year as name and housing unit is value
+# change the year names to numeric
+# plot a line graph for change in housing units over the year. 
+
+house <- housing_units |>
+  select(c(-HUESTIMATESBASE2010, -HUESTIMATE042020)) |>
+  pivot_longer(contains("HUESTIMATE"),
+               names_to = "Year",
+               values_to = "Units") |>
+  mutate(Year = as.numeric(stringr::str_sub(Year, start = 11))) 
+
+ggplot(house,
+       aes(Year, Units)) +
+  geom_line() +
+  xlab("Years") +
+  ylab("Housing Units") +
+  ggtitle("Housing Units between 2010 and 2020") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_x_continuous(breaks = round(seq(min(house$Year), max(house$Year), by = 1),1))
+```
+
+2. Generate a line plot of the number of housing units in each of the four regions (Midwest, Northeast, South, and West) from 2010 to 2020, using a different color for each region.
+
+```{r}
+# create a subset that only contains the midwest, northeast, south, and west regions 
+# plot a multi-lines graph and using different colors for the 4 regions. 
+
+reg <- house |>
+  subset(REGNAME == c("Northeast Region", "Midwest Region", "South Region", "West Region"))
+
+ggplot( reg,
+        aes(Year, Units, color = REGNAME)) +
+  geom_line() +
+  xlab("Years") +
+  ylab("Housing Units") +
+  ggtitle("Housing Units between 2010 and 2020 By Regions") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_x_continuous(breaks = round(seq(min(reg$Year), max(reg$Year), by = 1),1))
+```

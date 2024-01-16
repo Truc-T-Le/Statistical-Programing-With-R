@@ -1,0 +1,122 @@
+---
+title: "Lab 2"
+author: "YOUR NAME HERE"
+date: "2023-08-30"
+output:
+---
+
+You should edit this .Rmd using RStudio, then click *Render* in the menu bar of the Source window (above the text of this .Rmd). Remember, you must submit *both* your .Rmd and the compiled .html in order to receive full credit!
+
+### Collaborators
+
+INSERT NAMES OF ANY COLLABORATORS
+
+## A. Functions and Vectors
+
+In this problem, we will revisit the `sample` function to simulate the birthday problem. The birthday problem asks for the probability that in a set of $n$ randomly chosen people, at least two will share a birthday. For the purpose of this problem, suppose that we live in a universe where there are exactly 365 days in a year (sorry to those of you with leap day birthdays!) and each individual has an equal probability of being born on any given day.
+
+**1.** Write code to create a vector `birthdays` of the numbers 1:365.
+
+    ```{r, eval = T}
+# Make a vector containing 1 to 365 numbers 
+birthday <- 1:365
+    ```
+
+**2.** Use the `sample()` function to sample $n=5$ birthdays (with replacement) from `birthdays` and save it as a vector `sample_5`. Repeat this with $n=10, 20, 30, 50, 100$. You may want to use `set.seed()` to set a random seed.
+
+    ```{r, eval = T}
+# Set seed to have reproducible results.
+# Make 6 vectors containing random samples of the birthday vector, the vectors' sizes are 5, 10, 20, 30, 50, and 100
+
+set.seed(42)
+    
+sample_5 <- sample(birthday, size = 5, replace = TRUE)
+sample_10 <- sample(birthday, size = 10, replace = TRUE)
+sample_20 <- sample(birthday, size = 20, replace = TRUE)
+sample_30 <- sample(birthday, size = 30, replace = TRUE)
+sample_50 <- sample(birthday, size = 50, replace = TRUE)
+sample_100 <- sample(birthday, size = 100, replace = TRUE)
+
+
+sample_5
+sample_10
+sample_20
+sample_30
+sample_50
+sample_100
+
+    ```
+
+**3.** Did you sample the same birthday twice in `sample_5`? What about for the other samples? Write code that can be used to test whether any of the days appears twice in each of your samples. There are many ways to do this and you can use any functions. In particular, `length()` and `unique()` may be useful.
+
+    ```{r, eval = T}
+# creating vectors of duplicate days for each sample sets. 
+repeat_5 <- unique(sample_5[duplicated(sample_5)])
+repeat_10 <- unique(sample_10[duplicated(sample_10)])
+repeat_20 <- unique(sample_20[duplicated(sample_20)])
+repeat_30 <- unique(sample_30[duplicated(sample_30)])
+repeat_50 <- unique(sample_50[duplicated(sample_50)])
+repeat_100 <- unique(sample_100[duplicated(sample_100)])
+
+repeat_5
+repeat_10
+repeat_20
+repeat_30
+repeat_50
+repeat_100
+    ```
+
+**4.** What do you observe? Discuss any patterns or surprising findings.
+
+For the smaller sets, sample_5 and sample_10, there were no two birthdays that were the same. It is observed that there is a higher likelihood of a day appearing more than once in a larger sized sample sets. 
+
+## B. Working with Data Frames
+
+Use the following code to load the `penguins` data.
+
+```{r, eval = T}
+# load palmer penguins package
+library(palmerpenguins)
+
+# open penguins data as a data frame
+data(penguins)
+penguins <- as.data.frame(penguins)
+```
+
+**5.** Using the `mean()` function, compute the mean body mass of penguins in the dataset, dropping any missing values.
+
+    ```{r, eval = T}
+# omitting any rows in the body mass column that have NA value before taking the mean of the body mass(g)
+clean_mass <- na.omit(penguins$body_mass_g)
+mean_mass <- mean(clean_mass)
+
+    ```
+    
+The average body mass of the penguins is `r mean_mass`g. 
+    
+**6.** Using the `max` function, compute the maximum flipper length of penguins in the dataset, dropping any missing values.
+
+    ```{r, eval = T}
+# omitting any rows in the flipper length column before finding the max flipper length(mm)
+flipper_clean <- na.omit(penguins$flipper_length_mm)
+max_length <- max(flipper_clean)
+    ```
+    
+The maximum flipper length is `r max_length`mm.
+    
+**7.** Using the `hist` function, create a histogram of the ratio of the penguins' bill length to bill depth, dropping any missing values. What is the shape of the resulting distribution?
+
+```{r echo=TRUE}
+# remove all of the NA values from both the bill length and bill depth columns
+# then find the ratio of the penguins' bill length to bill depth by dividing the length by the depth
+# plot the ratio using the histogram. 
+    
+L_clean <- na.omit(penguins$bill_length_mm)
+D_clean <- na.omit(penguins$bill_depth_mm)
+
+ratio_ld <- L_clean/D_clean
+
+hist(ratio_ld, main = "Ratio of bill length to bill depth")
+```
+
+The shape of the histogram distribution looks to be biomodal, this could be the result of measuring the bill length and depth of multiple species of penguins. 

@@ -1,0 +1,53 @@
+---
+title: "Check-in 8"
+author: "Amelia Le"
+date: "2023-10-30"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    code-summary: "Code"
+---
+
+Remember, you must submit *both* your .Rmd and the compiled .html in order to receive full credit! In addition, to receive full credit, your code output and plots must be correctly formatted.
+
+### Collaborators
+
+INSERT NAMES OF ANY COLLABORATORS
+
+1. Write a function `sum_for_loop()`, that takes as input two vectors of length $n$, `x` and `y`, and returns the vector sum of `x` and `y` using a for loop of $n$ steps where the $i$th step involves adding `x[i]` and `y[i]`, Write a function `sum_vectorized()` that takes as input two vectors of length $n$, `x` and `y`, and computes the vector sum using the vectorized operator `x+y`.
+
+```{r}
+sum_for_loop <- function(x, y) {
+  n <- length(x)
+  z <- numeric(n)
+  for (i in 1:n) {
+    z[i] <- x[i] + y[i]
+  }
+  return(z)
+}
+
+sum_vectorized <- function(x,y) {
+  return(x + y)
+}
+```
+
+2. Compare the speed of your two functions using one of the approaches discussed in class today.
+
+```{r}
+set.seed(123)
+x <- sample(1:10, 10)
+y <- sample(1:10, 10)
+
+start_time <- Sys.time()
+sum_for_loop(x,y)
+print(Sys.time() - start_time)
+```
+
+```{r}
+start_time <- Sys.time()
+sum_vectorized(x,y)
+print(Sys.time() - start_time)
+```
+
+The sum_vectorized function that compute the vectors sum using the vectorize operator `+` is almost 10 times faster than the sum_for_loop that uses the for loop to add each entry of both vectors together.

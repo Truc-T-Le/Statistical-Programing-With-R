@@ -1,0 +1,67 @@
+---
+title: "Lab 1: Basic Definitions"
+author: "Amelia Le"
+date: "2023-08-23"
+output: html_document
+---
+
+## A. Combining R code and output
+
+1.  **Explain what the following code does in your own words.**
+
+    ```{r}
+    x <- 1
+    y <- 1
+    print(x + y)
+    ```
+
+We assigned the value 1 to both the 'x' and 'y' variables. Then we print out the result of the operation 'x + y'.
+
+## B. Running an R script
+
+1.  **Download the `01_lab-test-code.R` file and put it in the same folder as this lab. Change the chunk option `eval = F` to `eval = T`. What does this code file do?**
+
+    ```{r, eval = T}
+    source("01_lab-test-code.R")
+    ```
+
+The file print out "NICE ONE: You put the R file in the right place."
+
+## C. Exercises
+
+1.  **In contrast to the usual mathematical interpretation of x = x + 1, which has no finite solution, the following assignment evaluates to a finite value. Explain.**
+
+    ```{r}
+    x <- 1
+    x <- x + 1
+    print(x)
+    ```
+
+ Since we only update the x variable once rather than in an inifinite loop, the following assignment evaluates to a finite value which is 2. 
+
+2.  **The first expression below evaluates to a numeric value, but the second one causes an error. Explain.**
+
+    ```{r, error = T}
+    T + 1
+    T + "Hello"
+    ```
+
+  The second expression causes an error because we cannot perform an arithmetic operation on a string variable.
+
+3.  **Correct the code below so `example_chr` is an object of the character class.**
+
+    ```{r}
+    # YOUR CODE HERE
+    example_chr <- "T"
+    class(example_chr)
+    ```
+
+4.  What questions do you have about R, RStudio, and RMarkdown?
+
+    1.  What are the differences between RMarkdown and RStudio? 
+
+    2. Is R better than Python in term of accurately doing mathematical computation works?
+
+```{r}
+
+```

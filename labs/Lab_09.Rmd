@@ -1,0 +1,115 @@
+---
+title: "Lab 9"
+author: "Amelia Le"
+date: "2023-11-15"
+format: 
+  html:
+    embed-resources: true
+    code-tools: true
+    code-summary: "Code"
+---
+
+Remember, you must submit *both* your .Rmd and the compiled .html in order to receive full credit! In addition, to receive full credit, your code output and plots must be correctly formatted.
+
+### Collaborators
+
+```{r, warning=FALSE, message=FALSE}
+library(palmerpenguins)
+library(tidyverse)
+library(dbplyr)
+```
+
+
+## A. Bootstrapping the sampling distribution of the median
+
+1. Using the `penguins` dataset in the `palmerpenguins` package, construct a confidence interval for the mean `body_mass_g` for female Adelie penguins based on using a normal distribution based on the central limit theorem. You should compute the confidence interval without using `confint()`.
+
+```{r}
+attach(penguins)
+
+df_adelie <- penguins |> 
+  subset(species == "Adelie" & sex == "female")
+
+n <- length(df_adelie$species)
+mu <- mean(df_adelie$body_mass_g, na.rm=TRUE)
+sigma <- sd(df_adelie$body_mass_g, na.rm=TRUE)
+
+upper = mean(rnorm(n, mean = mu, sd = sigma)) + 1.96 * sigma / sqrt(n)
+lower = mean(rnorm(n, mean = mu, sd = sigma)) - 1.96 * sigma / sqrt(n)
+```
+
+The 95% confident interval for the mean body mass for female Adelie penguins is between `r lower` grams and `r upper` grams.
+
+2. Construct a bootstrap confidence interval for the mean `body_mass_g` for female Adelie penguins using 10000 resamples.
+
+```{r}
+Xbars <- replicate(1000, mean(sample(df_adelie$body_mass_g, size = 10000, replace = TRUE)))
+quantile(Xbars, probs = c(.025, .975))
+```
+
+3. Construct a bootstrap confidence interval for the median `body_mass_g` for female Adelie penguins using 10000 resamples.
+
+```{r}
+
+Xtilde <- replicate(1000, median(sample(df_adelie$body_mass_g, size = 10000, replace = TRUE)))
+quantile(Xtilde, probs = c(.025, .975))
+
+```
+
+## B. Simulations
+
+4. Suppose that $Y\sim \mathrm{Poisson}(X)$ where $X\sim \mathrm{Exponential}(1)$. Use simulation to estimate $E(Y)$ and $\mathrm{Var}(Y)$.
+
+```{r}
+Y <- replicate(10000, rpois(100,rexp(100, rate = 1)))
+Ybar <- mean(Y)
+Yvar <- sd(Y)^2
+```
+
+The estimated $E(Y)$ is `r Ybar` and the estimated $\mathrm{Var}(Y)$ is `r Yvar`
+
+5. For this question, you will write a simulation to test the frequentist coverage of a 95\% confidence interval for a proportion based on the normal approximation. 
+
+    a. First, write a function that takes two inputs: `n` and `p`. Your function should randomly generate some $X\sim \mathrm{Binomial}(n, p)$, compute $\widehat{p}= X/n$, and then compute the corresponding normal distribution-based confidence interval for $p$ **based on your sample** $\widehat{p}$. Your function should return `TRUE` if $p$ is in the confidence interval. You may use the following formula for the confidence interval:
+    
+    $$\widehat{p}\pm z_{.975}\sqrt{\frac{\widehat{p}(1-\widehat{p})}{n}}$$
+        
+```{r}
+binom <- function(n,p) {
+  X <- sum(rbinom(n, size = 1, p))
+  phat = X/n
+  upper = phat + 1.96 * sqrt((phat * (1-phat))/(n))
+  lower = phat - 1.96 * sqrt((phat * (1-phat))/(n))
+  if (p > lower & p < upper) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+```
+        
+    b. Next, write a second function that takes three inputs: `n`, `p`, and `n_runs`, representing the number of times to run your simulation. This function should use your function from (a) to simulate `n_runs` binomial random variables and return the proportion of the `n_runs` for which $p$ is contained in the confidence interval.
+    
+```{r}
+binom_runs <- function(n, p, nruns) {
+  x <- replicate(nruns, binom(n,p))
+  p <- sum(x * 1) / nruns
+  return(p)
+}
+```
+
+    c. Test your function from (b) with `n = 20`, `p = .5`, and `n_runs = 1000`.
+    
+```{r}
+binom_runs(20, 0.5, 1000)
+```
+    
+    d. Use your simulation code to investigate the following questions: For what values of `n` and `p` is the frequentist coverage close to the expected 95\% value? For what values of `n` and `p` is the frequentist coverage very different to the expected 95\% value?
+
+```{r}
+x1 <- binom_runs(20, 0.5, 1000)
+x2 <- binom_runs(20, 0.15, 1000)
+x3 <- binom_runs(4, 0.5, 1000)
+x4 <- binom_runs(4, 0.15, 1000)
+```
+If we keep n the same and reduce p from 0.5 to 0.15 we will see about a 0.13 drop in the expected 95% value from about 0.94 to 0.81. In Contrast, if we keep p the same and reduce the n value from 20 to 4 that is when we see a significant difference in the expected 95% value. If we change n to 4 and p to 0.15 then we will see that the expected 95% value reduces to less than half of the initial value of around 0.96.
