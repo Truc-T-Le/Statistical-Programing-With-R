@@ -1,0 +1,269 @@
+{
+  "accrual_periodicity": "other",
+  "additional_limitations": "",
+  "citation": "Healthy Communities Data and Indicators Project, CDPH and UCSF. 2015. Road Traffic Injuries 2002-2010",
+  "contact_email": "opendata@cdph.ca.gov",
+  "data_collection_tool": "",
+  "data_license": "Terms of Use",
+  "de_identification_method": "",
+  "description": "This table contains data on the annual number of fatal and severe road traffic injuries per population and per miles traveled by transport mode, for California, its regions, counties, county divisions, cities/towns, and census tracts. Injury data is from the Statewide Integrated Traffic Records System (SWITRS), California Highway Patrol (CHP), 2002-2010 data from the Transportation Injury Mapping System (TIMS) . The table is part of a series of indicators in the [Healthy Communities Data and Indicators Project of the Office of Health Equity]. Transportation accidents are the second leading cause of death in California for people under the age of 45 and account for an average of 4,018 deaths per year (2006-2010). Risks of injury in traffic collisions are greatest for motorcyclists, pedestrians, and bicyclists and lowest for bus and rail passengers. Minority communities bear a disproportionate share of pedestrian-car fatalities; Native American male pedestrians experience 4 times the death rate as Whites or Asians, and African-Americans and Latinos experience twice the rate as Whites or Asians. More information about the data table and a data dictionary can be found in the About/Attachments section.",
+  "geo_coverage": "California",
+  "geographic_granularity": "census tract",
+  "keywords": [
+    "bicycle injuries",
+    "bus injuries",
+    "car injuries",
+    "collision injuries",
+    "hci",
+    "healthy community indicator",
+    "injuries per mile traveled",
+    "motorcycle injuries",
+    "pedestrian injuries",
+    "road traffic injuries",
+    "social determinants of health",
+    "vehicle injuries"
+  ],
+  "limitations": "Limitations",
+  "name": "road-traffic-injuries-2002-2010",
+  "program_web_page": "https://www.cdph.ca.gov/Programs/OHE/Pages/HCI-Search.aspx",
+  "related_resources": "",
+  "resources": [
+    {
+      "format": "PDF",
+      "name": "road-traffic-injuries-narrative",
+      "path": "road-traffic-injuries-narrative.pdf",
+      "sources": [
+        {
+          "path": "https://data.chhs.ca.gov/dataset/e0216fbb-3739-4d92-9630-88d9f5686ac6/resource/184a0f70-57da-4246-b9b9-dd35248446b6/download/hci_roadtrafficinjuries_753_narrative-_and_examples_10-27-13-ada.pdf",
+          "title": "Road Traffic Injuries Narrative"
+        }
+      ],
+      "title": "Road Traffic Injuries Narrative"
+    },
+    {
+      "description": "This table contains data on the annual number of fatal and severe road traffic injuries per population and per miles traveled by transport mode, for California, its regions, counties, county divisions, cities/towns, and census tracts. Injury data is from the Statewide Integrated Traffic Records System (SWITRS), California Highway Patrol (CHP), 2002-2010 data from the Transportation Injury Mapping System (TIMS) . The table is part of a series of indicators in the [Healthy Communities Data and Indicators Project of the Office of Health Equity](https://www.cdph.ca.gov/Programs/OHE/Pages/Healthy-Communities-Data-and-Indicators-Project-(HCI).aspx). Transportation accidents are the second leading cause of death in California for people under the age of 45 and account for an average of 4,018 deaths per year (2006-2010). Risks of injury in traffic collisions are greatest for motorcyclists, pedestrians, and bicyclists and lowest for bus and rail passengers. Minority communities bear a disproportionate share of pedestrian-car fatalities; Native American male pedestrians experience 4 times the death rate as Whites or Asians, and African-Americans and Latinos experience twice the rate as Whites or Asians. More information about the data table and a data dictionary can be found in the About/Attachments section.",
+      "format": "XLSX",
+      "name": "road-traffic-injuries-2002-2010",
+      "path": "road-traffic-injuries-2002-2010.xlsx",
+      "schema": {
+        "fields": [
+          {
+            "description": "Indicator ID\n",
+            "name": "ind_id",
+            "title": "ind_id",
+            "type": "string"
+          },
+          {
+            "description": "Definition of indicator in plain language\n",
+            "name": "ind_definition",
+            "title": "ind_definition",
+            "type": "string"
+          },
+          {
+            "description": "Year(s) that the indicator was reported\n",
+            "name": "reportyear",
+            "title": "reportyear",
+            "type": "string"
+          },
+          {
+            "description": "Type of geographic unit\nCT=Census tract; PL=Place (includes cities, towns, and census designated places -CDP-. It does not include unincorporated communities); CO=County; CD=County division; R4=Consolidated Statistical Metropolitan Area; RE=region; CA=State\n",
+            "name": "geotype",
+            "title": "geotype",
+            "type": "string"
+          },
+          {
+            "description": "Value of geographic unit\n11 digit FIPS census tract code; 5-digit FIPS place code; 10-digit FIPS county division code; 5-digit FIPS county code; 4-digit consolidated statistical metropolitan area ID; 2-digit region ID; 2-digit FIPS state code. The geotypevalues 99999 for PL and 99999999999 for CT indicate injury data that did not geocode.\n",
+            "name": "geotypevalue",
+            "title": "geotypevalue",
+            "type": "string"
+          },
+          {
+            "description": "Name of geographic unit\ncensus tract name, place name, county division, county name, consolidated statistical metropolitan area name, region name, or state name\n",
+            "name": "geoname",
+            "title": "geoname",
+            "type": "string"
+          },
+          {
+            "description": "Name of county that geotype is in; Not available for geotypes R4, RE and CA\n\n",
+            "name": "county_name",
+            "title": "county_name",
+            "type": "string"
+          },
+          {
+            "description": "FIPS code of county that geotype is in; 2-digit census state code (06) plus 3-digit census county code\n\n",
+            "name": "county_fips",
+            "title": "county_fips",
+            "type": "string"
+          },
+          {
+            "description": "Metopolitan Planning Organization (MPO)-based region name: Metropolitan Planning Organizations (MPO) regions as reported in the 2010 California Regional Progress Report (http://www.dot.ca.gov/hq/tpp/offices/orip/Collaborative%20Planning/Files/CARegionalProgress_2-1-2011.pdf).\n\n",
+            "name": "region_name",
+            "title": "region_name",
+            "type": "string"
+          },
+          {
+            "description": "Metopolitan Planning Organization (MPO)-based region code: 01=Bay Area; 02=Butte; 03=Central/Southeast Sierra; 04=Monterey Bay; 05=North Coast; 06=Northeast Sierra; 07=Northern Sacramento Valley; 08=Sacramento Area; 09=San Diego; 10=San Joaquin Valley; 11=San Luis Obispo; 12=Santa Barbara; 13=Shasta; 14=Southern California\n\n",
+            "name": "region_code",
+            "title": "region_code",
+            "type": "string"
+          },
+          {
+            "description": "Mode of transportation of the victim: Bicyclist, Bus, Car/Pickup, Motorcycle, Pedestrian, Truck, Vehicles, All modes, ND=no data\n\n",
+            "name": "mode",
+            "title": "mode",
+            "type": "string"
+          },
+          {
+            "description": "Severity of the victim's injuries: Killed, severe injury, ND=no data\n",
+            "name": "severity",
+            "title": "severity",
+            "type": "string"
+          },
+          {
+            "description": "Number of injuries in geographic area by severity and by mode. ",
+            "name": "injuries",
+            "title": "injuries",
+            "type": "number"
+          },
+          {
+            "description": "(Denominator 1) Total population in the geographic area\n",
+            "name": "totalpop",
+            "title": "totalpop",
+            "type": "number"
+          },
+          {
+            "description": "(Injury rate 1) Rate of injuries over total population (injuries per 100,000 people)\n",
+            "name": "poprate",
+            "title": "poprate",
+            "type": "number"
+          },
+          {
+            "description": "Lower limit of 95% confidence interval for poprate\n",
+            "name": "LL95CI_poprate",
+            "title": "LL95CI_poprate",
+            "type": "number"
+          },
+          {
+            "description": "Upper limit of 95% confidence interval for poprate\n",
+            "name": "UL95CI_poprate",
+            "title": "UL95CI_poprate",
+            "type": "number"
+          },
+          {
+            "description": "Standard error of poprate\n",
+            "name": "poprate_se",
+            "title": "poprate_se",
+            "type": "number"
+          },
+          {
+            "description": "Relative standard error (se/percent * 100) expressed as a percent for poprate\n",
+            "name": "poprate_rse",
+            "title": "poprate_rse",
+            "type": "number"
+          },
+          {
+            "description": "California decile for poprate\n",
+            "name": "CA_decile_pop",
+            "title": "CA_decile_pop",
+            "type": "number"
+          },
+          {
+            "description": "Rate ratio to California rate for poprate\n",
+            "name": "CA_RR_poprate",
+            "title": "CA_RR_poprate",
+            "type": "number"
+          },
+          {
+            "description": "(Denominator 2) Annual vehicle miles traveled (AVMT) in the geographic area.  In the case of bicycles and pedestrians, this variable indicates the miles traveled by biking and walking.\n",
+            "name": "avmttotal",
+            "title": "avmttotal",
+            "type": "number"
+          },
+          {
+            "description": "Rate of injuries over annual miles traveled (injuries per 1,000,000,000 miles traveled)\n",
+            "name": "avmtrate",
+            "title": "avmtrate",
+            "type": "number"
+          },
+          {
+            "description": "Lower limit of 95% confidence interval for avmrate\n",
+            "name": "LL95CI_avmtrate",
+            "title": "LL95CI_avmtrate",
+            "type": "number"
+          },
+          {
+            "description": "Upper limit of 95% confidence interval for avmrate\n",
+            "name": "UL95CI_avmtrate",
+            "title": "UL95CI_avmtrate",
+            "type": "number"
+          },
+          {
+            "description": "Standard error for avmrate\n",
+            "name": "avmtrate_se",
+            "title": "avmtrate_se",
+            "type": "number"
+          },
+          {
+            "description": "Relative standard error (se/percent * 100) expressed as a percent for avmrate\n",
+            "name": "avmtrate_rse",
+            "title": "avmtrate_rse",
+            "type": "number"
+          },
+          {
+            "description": "California decile for avmrate\n",
+            "name": "CA_decile_avmt",
+            "title": "CA_decile_avmt",
+            "type": "number"
+          },
+          {
+            "description": "Rate ratio to California rate for avmrate\n",
+            "name": "CA_RR_avmtrate",
+            "title": "CA_RR_avmtrate",
+            "type": "number"
+          },
+          {
+            "description": "Total population in group quarters in the geographic area\n",
+            "name": "groupquarters",
+            "title": "groupquarters",
+            "type": "number"
+          },
+          {
+            "description": "Date/time stamp of version of data\n",
+            "name": "version",
+            "title": "version",
+            "type": "datetime"
+          }
+        ]
+      },
+      "sources": [
+        {
+          "path": "https://data.chhs.ca.gov/dataset/e0216fbb-3739-4d92-9630-88d9f5686ac6/resource/cdb50347-6fe1-456e-a336-d7daf0aba595/download/road_traffic.xlsx",
+          "title": "Road Traffic Injuries 2002-2010"
+        }
+      ],
+      "title": "Road Traffic Injuries 2002-2010"
+    },
+    {
+      "description": "This table contains data on the annual number of fatal and severe road traffic injuries per population and per miles traveled by transport mode, for California, its regions, counties, county divisions, cities/towns, and census tracts. Injury data is from the Statewide Integrated Traffic Records System (SWITRS), California Highway Patrol (CHP), 2002-2010 data from the Transportation Injury Mapping System (TIMS) . The table is part of a series of indicators in the [Healthy Communities Data and Indicators Project of the Office of Health Equity](https://www.cdph.ca.gov/Programs/OHE/Pages/Healthy-Communities-Data-and-Indicators-Project-(HCI).aspx). Transportation accidents are the second leading cause of death in California for people under the age of 45 and account for an average of 4,018 deaths per year (2006-2010). Risks of injury in traffic collisions are greatest for motorcyclists, pedestrians, and bicyclists and lowest for bus and rail passengers. Minority communities bear a disproportionate share of pedestrian-car fatalities; Native American male pedestrians experience 4 times the death rate as Whites or Asians, and African-Americans and Latinos experience twice the rate as Whites or Asians. More information about the data table and a data dictionary can be found in the About/Attachments section.",
+      "format": "XLSX",
+      "name": "road-traffic-injuries-data-dictionary",
+      "path": "road-traffic-injuries-data-dictionary.xlsx",
+      "sources": [
+        {
+          "path": "https://data.chhs.ca.gov/dataset/e0216fbb-3739-4d92-9630-88d9f5686ac6/resource/bef0c640-7f75-412b-85f9-882ac1ede0ac/download/roadtrafficinjuriesdd.xlsx",
+          "title": "Road Traffic Injuries Data Dictionary"
+        }
+      ],
+      "title": "Road Traffic Injuries Data Dictionary"
+    }
+  ],
+  "secondary_sources": "Numerator: Statewide Integrated Traffic Records System (SWITRS), California Highway Patrol (CHP), 2002-2010 data from the Transportation Injury Mapping System (TIMS) (http://www.tims.berkeley.edu).  Denominator 1: Historical Population and Housing Estimates for Cities, Counties, and the State, 2000-2010, Demographic Research Unit, Department of Finance (DOF) (http://www.dof.ca.gov/research/demographic/reports/estimates/e-8/2000-10/view.php).  U.S. Census Bureau, 2006-2010 American Community Survey (http://factfinder2.census.gov/faces/nav/jsf/pages/index.xhtml).  Denominator 2: California Public Road data (CPR); Division of Research, Innovation and System Information; Office of Highway System Information & Performance; Highway Performance Monitoring System; California Department of Transportation http://www.dot.ca.gov/hq/tsip/hpms/datalibrary.php).",
+  "sources": [
+    {
+      "name": "Office of Health Equity, Healthy Places Team",
+      "web": "https://www.cdph.ca.gov/Programs/OHE/Pages/HCI-Search.aspx"
+    }
+  ],
+  "temporal_coverage": "2002 to 2010; 2002-2004, 2005-2007, and 2008-2010 3 year averages; 2006-2010 5 year average",
+  "title": "Road Traffic Injuries"
+}
